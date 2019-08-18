@@ -21,13 +21,8 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)//, proxyTargetClass = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
     private DataSource dataSource;
-
-    @Autowired
     private AuthenticationEntryPoint authEntryPoint;
 
     @Bean
@@ -41,7 +36,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Setting Service to find User in the database.
         // And Setting PasswordEncoder
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
+    @Autowired
+    private void setUserDetailsService(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Autowired
+    private void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Autowired
+    private void setAuthenticationEntryPoint(AuthenticationEntryPoint authEntryPoint) {
+        this.authEntryPoint = authEntryPoint;
     }
 
     @Override

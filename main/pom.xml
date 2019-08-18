@@ -7,10 +7,10 @@
         <artifactId>libereya</artifactId>
         <version>1</version>
     </parent>
-    <artifactId>web</artifactId>
+    <artifactId>main</artifactId>
     <version>1</version>
     <packaging>war</packaging>
-    <name>web</name>
+    <name>main</name>
 
     <dependencies>
 
@@ -20,19 +20,17 @@
             <version>1</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>edu.vrg18</groupId>
+            <artifactId>web</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>edu.vrg18</groupId>
+            <artifactId>rest</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

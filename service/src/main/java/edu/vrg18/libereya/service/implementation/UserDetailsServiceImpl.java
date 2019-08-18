@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private EntityManager entityManager;
 
     @Autowired
-    private void setUserRepository(UserRepository userRepository) {
+    private void setRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

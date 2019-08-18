@@ -17,7 +17,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("edu.vrg18.libereya.controller"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.regex("/rest.*"))
                 .build();
     }
 }
