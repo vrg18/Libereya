@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<table class="table table-bordered table-hover horizontal-align">
+    <caption><h3>Авторы</h3></caption>
+    <colgroup>
+        <col span="1" style="background:Khaki">
+        <col span="3" style="background-color:LightCyan">
+    </colgroup>
+    <thead>
+    <tr>
+        <th style="width: 55%">Автор</th>
+        <th style="width: 15%"></th>
+        <th style="width: 15%"></th>
+        <th style="width: 15%"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author : ${authors}">
+        <td th:hidden="${author.id}">ID</td>
+        <td th:text="${author.name}">Author</td>
+        <td style="text-align: center"><a th:href="@{'/edit_author/{id}'(id=${author.id})}"><i class="fa fa-edit"
+                                                                                               style="font-size:20px"></i></a>
+        </td>
+        <td style="text-align: center"><a th:href="@{'/delete_author/{id}'(id=${author.id})}"><i class="fa fa-trash"
+                                                                                                 style="font-size:20px"></i></a>
+        </td>
+        <td style="text-align: center"><a th:href="@{'/books_author/{id}'(id=${author.id})}"><i class="fa fa-list-ul"
+                                                                                                style="font-size:20px"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<ul class="nav navbar-nav">
+    <li><a href="#" th:href="@{/new_author}">Добавить автора</a></li>
+</ul>
+</body>
+</html>

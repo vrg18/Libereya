@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<h3>Новая связь пользователь-роль</h3>
+<br/>
+<div class="container">
+    <div class="container">
+        <form class="form-horizontal" th:action="@{/create_userrole}" name="input_form" id="input_form"
+              method="post" role="form">
+            <div class="form-group">
+                <label for="users">Пользователь</label>
+                <select class="form-control" name="userId" id="appUser">
+                    <option value="">Выберите пользователя</option>
+                    <option th:each="appUser : ${appUsers}"
+                            th:value="${appUser.userId}"
+                            th:text="${appUser.userName}">
+                    </option>
+                </select>
+                <label for="users">Роль</label>
+                <select class="form-control" name="roleId" id="appRole">
+                    <option value="">Выберите роль</option>
+                    <option th:each="appRole : ${appRoles}"
+                            th:value="${appRole.roleId}"
+                            th:text="${appRole.roleName}">
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Создать</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

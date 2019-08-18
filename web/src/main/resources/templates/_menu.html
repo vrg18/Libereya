@@ -1,0 +1,27 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     style="border: 1px solid #ccc;padding:5px;margin-bottom:20px;">
+
+    <a th:href="@{/}">В начало</a>
+
+    |&nbsp;
+
+    <a th:href="@{/authors}">Авторы</a>
+
+    |&nbsp;
+
+    <a th:href="@{/books}">Книги</a>
+
+    |&nbsp;
+
+    <a th:href="@{/user_info}">Пользователь</a>
+
+    |&nbsp;
+
+    <a th:href="@{/admin}">Администратор</a>
+
+    |&nbsp;
+
+    <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Вход</a>
+    <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Выход (<span th:utext="${#request.userPrincipal.name}"></span>)</a>
+
+</div>

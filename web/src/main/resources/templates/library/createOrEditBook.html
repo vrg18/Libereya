@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<div th:if="${newBook}">
+    <h3>Новая книга</h3>
+</div>
+<div th:unless="${newBook}">
+    <h3>Редактирование книги</h3>
+</div>
+<br>
+<div class="container">
+    <form class="form-horizontal" th:object="${book}" th:action="@{/save_book}" name="edit_form" id="edit_form"
+          method="post" role="form">
+        <div th:if="${newBook}" class="form-group">
+            <label for="author">Автор</label>
+            <input type="hidden" id="id" name="id"/>
+            <select class="form-control" id="author" name="author.id">
+                <option value="">--- Выберите автора ---</option>
+                <option th:each="author : ${authors}"
+                        th:value="${author.id}"
+                        th:text="${author.name}">
+                </option>
+            </select>
+            <label for="title">Название</label>
+            <input type="text" class="form-control" id="title" name="title" maxlength="200"/>
+            <label for="year">Год</label>
+            <input type="text" class="form-control" id="year" name="year" maxlength="4"/>
+            <label for="genre">Жанр</label>
+            <input type="text" class="form-control" id="genre" name="genre" maxlength="100"/>
+        </div>
+        <div th:unless="${newBook}" class="form-group">
+            <input type="hidden" id="id" name="id" th:value="*{id}"/>
+            <label for="author">Автор</label>
+            <select class="form-control" id="author" name="author.id">
+                <option th:each="author : ${authors}"
+                        th:value="${author.id}"
+                        th:selected="${author.id.equals(book.author.id)}"
+                        th:text="${author.name}">
+                </option>
+            </select>
+            <label for="title">Название</label>
+            <input type="text" class="form-control" id="title" name="title" th:value="*{title}" maxlength="200"/>
+            <label for="year">Год</label>
+            <input type="text" class="form-control" id="year" name="year" th:value="*{year}" maxlength="4"/>
+            <label for="genre">Жанр</label>
+            <input type="text" class="form-control" id="genre" name="genre" th:value="*{genre}" maxlength="100"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+</body>
+</html>

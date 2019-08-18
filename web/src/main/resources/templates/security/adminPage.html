@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<h3>Управление пользователями и ролями</h3>
+<h4>
+    <div th:if="${userInfo != null}" th:utext="${userInfo}"></div>
+</h4>
+
+<br/><br/>
+<table class="table table-bordered table-hover horizontal-align">
+    <caption><h3>Пользователи</h3></caption>
+    <colgroup>
+        <col span="2" style="background:Khaki">
+        <col span="2" style="background-color:LightCyan">
+    </colgroup>
+    <thead>
+    <tr>
+        <th style="width: 49%">Имя пользователя</th>
+        <th style="width: 17%">Вкл.</th>
+        <th style="width: 17%"></th>
+        <th style="width: 17%"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:hidden="${user.userId}">userId</td>
+        <td th:text="${user.userName}">userName</td>
+        <td th:hidden="${user.encryptedPassword}">encryptedPassword</td>
+        <td style="text-align: center">
+            <div th:if="${user.enabled}" class="fa fa-check"
+                 style="font-size:20px"></div>
+        </td>
+        <td style="text-align: center"><a th:href="@{'/edit_user/{id}'(id=${user.userId})}"><i class="fa fa-edit"
+                                                                                               style="font-size:20px"></i></a>
+        </td>
+        <td style="text-align: center"><a th:href="@{'/delete_user/{id}'(id=${user.userId})}"><i class="fa fa-trash"
+                                                                                                 style="font-size:20px"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<ul class="nav navbar-nav">
+    <li><a href="#" th:href="@{/new_user}">Добавить пользователя</a></li>
+</ul>
+
+<br/><br/>
+<table class="table table-bordered table-hover horizontal-align">
+    <caption><h3>Роли</h3></caption>
+    <colgroup>
+        <col span="1" style="background:Khaki">
+        <col span="2" style="background-color:LightCyan">
+    </colgroup>
+    <thead>
+    <tr>
+        <th style="width: 40%">Имя роли</th>
+        <th style="width: 5%"></th>
+        <th style="width: 5%"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="role : ${roles}">
+        <td th:hidden="${role.roleId}">roleId</td>
+        <td th:text="${role.roleName}">roleName</td>
+        <td style="text-align: center"><a th:href="@{'/edit_role/{id}'(id=${role.roleId})}"><i class="fa fa-edit"
+                                                                                               style="font-size:20px"></i></a>
+        </td>
+        <td style="text-align: center"><a th:href="@{'/delete_role/{id}'(id=${role.roleId})}"><i class="fa fa-trash"
+                                                                                                 style="font-size:20px"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<ul class="nav navbar-nav">
+    <li><a href="#" th:href="@{/new_role}">Добавить роль</a></li>
+</ul>
+
+<br/><br/>
+<table class="table table-bordered table-hover horizontal-align">
+    <caption><h3>Пользователи и их роли</h3></caption>
+    <colgroup>
+        <col span="2" style="background:Khaki">
+        <col span="2" style="background-color:LightCyan">
+    </colgroup>
+    <thead>
+    <tr>
+        <th style="width: 35%">Пользователь</th>
+        <th style="width: 35%">Его роль</th>
+        <th style="width: 15%"></th>
+        <th style="width: 15%"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="userRole : ${usersRoles}">
+        <td th:hidden="${userRole.id}">id</td>
+        <td th:text="${userRole.appUser.userName}">appUser</td>
+        <td th:text="${userRole.appRole.roleName}">appRole</td>
+        <td style="text-align: center"><a th:href="@{'/edit_userrole/{id}'(id=${userRole.id})}"><i class="fa fa-edit"
+                                                                                           style="font-size:20px"></i></a>
+        </td>
+        <td style="text-align: center"><a th:href="@{'/delete_userrole/{id}'(id=${userRole.id})}"><i class="fa fa-trash"
+                                                                                             style="font-size:20px"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<ul class="nav navbar-nav">
+    <li><a href="#" th:href="@{/new_userrole}">Добавить связь</a></li>
+</ul>
+</body>
+</html>

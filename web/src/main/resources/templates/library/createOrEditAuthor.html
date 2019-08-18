@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<div th:if="${newAuthor}">
+    <h3>Новый автор</h3>
+</div>
+<div th:unless="${newAuthor}">
+    <h3>Редактирование автора</h3>
+</div>
+<br>
+<div class="container">
+    <form class="form-horizontal" th:object="${author}" th:action="@{/save_author}" name="edit_form"
+          id="edit_form" method="post" role="form">
+        <div th:if="${newAuthor}" class="form-group">
+            <input type="hidden" id="id" name="id"/>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Имя автора" maxlength="100"/>
+        </div>
+        <div th:unless="${newAuthor}" class="form-group">
+            <input type="hidden" id="id" name="id" th:value="*{id}"/>
+            <input type="text" class="form-control" id="name" name="name" th:value="*{name}" maxlength="100"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+</body>
+</html>

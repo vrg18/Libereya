@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<h3>Новая роль</h3>
+<br/><div class="container">
+    <div class="container">
+        <form class="form-vertical" th:action="@{/create_role}" name="input_form" id="input_form"
+              method="post" role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="roleName" name="roleName" placeholder="Имя роли" maxlength="36"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Создать</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

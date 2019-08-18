@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head :: head"></head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+<h3>Новый пользователь</h3>
+<br/><div class="container">
+    <div class="container">
+        <form class="form-vertical" th:action="@{/create_user}" name="input_form" id="input_form"
+              method="post" role="form">
+            <div class="form-group">
+                <label for="user">Пользователь</label>
+                <input type="text" class="form-control" id="userName" name="userName" maxlength="36"/>
+                <label for="password">Пароль</label>
+                <input type="password" class="form-control" id="password" name="password" maxlength="36"/>
+                <label for="enabled">Вкл.</label>
+                <input type="checkbox" class="form-control" id="enabled" name="enabled" th:checked="true"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Создать</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
