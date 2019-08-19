@@ -5,31 +5,30 @@
     <parent>
         <groupId>edu.vrg18</groupId>
         <artifactId>libereya</artifactId>
-        <version>1</version>
+        <version>1-SNAPSHOT</version>
     </parent>
     <artifactId>main</artifactId>
-    <version>1</version>
+    <version>1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>main</name>
 
     <dependencies>
 
         <dependency>
             <groupId>edu.vrg18</groupId>
             <artifactId>service</artifactId>
-            <version>1</version>
+            <version>1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>edu.vrg18</groupId>
             <artifactId>web</artifactId>
-            <version>1</version>
+            <version>1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>edu.vrg18</groupId>
             <artifactId>rest</artifactId>
-            <version>1</version>
+            <version>1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 

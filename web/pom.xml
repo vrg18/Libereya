@@ -5,19 +5,18 @@
     <parent>
         <groupId>edu.vrg18</groupId>
         <artifactId>libereya</artifactId>
-        <version>1</version>
+        <version>1-SNAPSHOT</version>
     </parent>
     <artifactId>web</artifactId>
-    <version>1</version>
+    <version>1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>web</name>
 
     <dependencies>
 
         <dependency>
             <groupId>edu.vrg18</groupId>
             <artifactId>service</artifactId>
-            <version>1</version>
+            <version>1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
@@ -33,6 +32,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
