@@ -114,11 +114,12 @@ public class AuthorRestControllerIntegrationTest {
 
         String id = createTestAuthor(TEST_AUTHOR_1);
         Author author = new Author(TEST_AUTHOR_2);
+        author.setId(UUID.fromString(id));
 
-        given().pathParam("id", id).log().body()
+        given().log().body()
                 .contentType(ContentType.JSON).body(author)
                 .auth().preemptive().basic(LOGIN, PASSWORD)
-                .when().put(BASE_PATH + "/{id}")
+                .when().put(BASE_PATH)
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value())
                 .body("name", equalTo(TEST_AUTHOR_2));

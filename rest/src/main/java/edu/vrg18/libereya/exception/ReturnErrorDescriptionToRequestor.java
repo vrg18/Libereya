@@ -3,6 +3,7 @@ package edu.vrg18.libereya.exception;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -10,36 +11,31 @@ import org.springframework.validation.FieldError;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Setter
 @Getter
 @JsonInclude(Include.NON_NULL)
-public class ApiError {
+public class ReturnErrorDescriptionToRequestor {
 	
 	private HttpStatus status;
 	private String message;
 	private String debugMessage;
 	private List<FieldValidationError> fieldValidationErrors;
 
-	ApiError() {
-	}
-
-	ApiError(HttpStatus status) {
-		this();
+	ReturnErrorDescriptionToRequestor(HttpStatus status) {
 		this.status = status;
 	}
 
-	ApiError(HttpStatus status, Throwable ex) {
-		this();
+	ReturnErrorDescriptionToRequestor(HttpStatus status, Throwable ex) {
 		this.status = status;
 		this.message = "Unexpected error";
-		this.setDebugMessage(ex.getMessage());
+		this.debugMessage = ex.getMessage();
 	}
 
-	ApiError(HttpStatus status, String message, Throwable ex) {
-		this();
+	ReturnErrorDescriptionToRequestor(HttpStatus status, String message, Throwable ex) {
 		this.status = status;
 		this.message = message;
-		this.setDebugMessage(ex.getMessage());
+		this.debugMessage = ex.getMessage();
 	}
 
 	void addValidationErrors(List<FieldError> fieldErrors) {
@@ -59,9 +55,4 @@ public class ApiError {
 		}
 		fieldValidationErrors.add(subError);
 	}
-
-	public List<FieldValidationError> getFieledValidationErrors() {
-		return fieldValidationErrors;
-	}
-
 }

@@ -1,24 +1,20 @@
 package edu.vrg18.libereya.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.vrg18.libereya.dto.BookDto;
 import edu.vrg18.libereya.service.interfaces.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/books")
 public class BookRestController {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
-    public void setService(BookService bookService) {
+    public BookRestController(BookService bookService) {
         this.bookService = bookService;
     }
 
@@ -38,13 +34,13 @@ public class BookRestController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody Map<String, String> bookMap) {
-        return bookService.updateBook(objectMapper.convertValue(bookMap, BookDto.class));
+    public BookDto createBook(@RequestBody @Valid BookDto bookDto) {
+        return bookService.updateBook(bookDto);
     }
 
-    @PutMapping("/{id}")
-    public BookDto updateBook(@RequestBody Map<String, String> bookMap) {
-        return bookService.updateBook(objectMapper.convertValue(bookMap, BookDto.class));
+    @PutMapping
+    public BookDto updateBook(@RequestBody @Valid BookDto bookDto) {
+        return bookService.updateBook(bookDto);
     }
 
     @DeleteMapping("/{id}")

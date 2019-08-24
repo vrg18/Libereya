@@ -25,12 +25,11 @@ import java.util.UUID;
 @Controller
 public class SecurityController {
 
-    private UserService userService;
-    private RoleService roleService;
-    private UserRoleService userRoleService;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final UserRoleService userRoleService;
 
-    @Autowired
-    public void setService(UserService userService, RoleService roleService, UserRoleService userRoleService) {
+    public SecurityController(UserService userService, RoleService roleService, UserRoleService userRoleService) {
         this.userService = userService;
         this.roleService = roleService;
         this.userRoleService = userRoleService;

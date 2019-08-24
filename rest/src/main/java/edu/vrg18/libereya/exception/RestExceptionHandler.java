@@ -27,55 +27,55 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError apiError = new ApiError(status, "Malformed JSON request", ex);
-        return new ResponseEntity(apiError, status);
+        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(status, "Malformed JSON request", ex);
+        return new ResponseEntity(returnErrorDescriptionToRequestor, status);
     }
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
                                                                    HttpStatus status, WebRequest request) {
-        return new ResponseEntity<Object>(new ApiError(status, "No handler found", ex), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Object>(new ReturnErrorDescriptionToRequestor(status, "No handler found", ex), HttpStatus.NOT_FOUND);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError apiError = new ApiError(status, "Method arg not valid", ex);
-        apiError.addValidationErrors(ex.getBindingResult().getFieldErrors());
-        return new ResponseEntity<Object>(apiError, HttpStatus.BAD_REQUEST);
+        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(status, "Method arg not valid", ex);
+        returnErrorDescriptionToRequestor.addValidationErrors(ex.getBindingResult().getFieldErrors());
+        return new ResponseEntity<Object>(returnErrorDescriptionToRequestor, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
                                                                       WebRequest request) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
-        apiError.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
+        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(BAD_REQUEST);
+        returnErrorDescriptionToRequestor.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
                 ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
-        apiError.setDebugMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        returnErrorDescriptionToRequestor.setDebugMessage(ex.getMessage());
+        return new ResponseEntity<>(returnErrorDescriptionToRequestor, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Entity does not exist", ex);
-        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(HttpStatus.NOT_FOUND, "Entity does not exist", ex);
+        return new ResponseEntity<>(returnErrorDescriptionToRequestor, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UnlawfulDeletionException.class)
     protected ResponseEntity<Object> handleUnlawfulDeletionEx(UnlawfulDeletionException ex, WebRequest request) {
-        ApiError apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED, ex);
-        return new ResponseEntity<>(apiError, HttpStatus.METHOD_NOT_ALLOWED);
+        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(HttpStatus.METHOD_NOT_ALLOWED, ex);
+        return new ResponseEntity<>(returnErrorDescriptionToRequestor, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
 //    @ExceptionHandler(AccessDeniedException.class)
 //    protected ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
-//        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN, "You do not have permission!", ex);
-//        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+//        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(HttpStatus.FORBIDDEN, "You do not have permission!", ex);
+//        return new ResponseEntity<>(returnErrorDescriptionToRequestor, HttpStatus.FORBIDDEN);
 //    }
 
 //    @ExceptionHandler(Exception.class)
 //    protected ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-//        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Other exception", ex);
-//        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+//        ReturnErrorDescriptionToRequestor returnErrorDescriptionToRequestor = new ReturnErrorDescriptionToRequestor(HttpStatus.INTERNAL_SERVER_ERROR, "Other exception", ex);
+//        return new ResponseEntity<>(returnErrorDescriptionToRequestor, HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
 }

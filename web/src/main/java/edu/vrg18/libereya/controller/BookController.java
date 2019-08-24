@@ -18,11 +18,10 @@ import java.util.UUID;
 @Controller
 public class BookController {
 
-    private BookService bookService;
-    private AuthorService authorService;
+    private final BookService bookService;
+    private final AuthorService authorService;
 
-    @Autowired
-    public void setService(BookService bookService, AuthorService authorService) {
+    public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
         this.authorService = authorService;
     }

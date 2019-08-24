@@ -16,10 +16,9 @@ import java.util.UUID;
 @Controller
 public class AuthorController {
 
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
-    @Autowired
-    public void setService(AuthorService authorService) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
