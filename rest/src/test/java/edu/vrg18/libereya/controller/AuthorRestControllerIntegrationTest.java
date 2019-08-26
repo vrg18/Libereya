@@ -150,8 +150,7 @@ public class AuthorRestControllerIntegrationTest {
         String id1 = createTestAuthor(TEST_AUTHOR_1);
         String id2 = createTestAuthor(TEST_AUTHOR_2);
 
-        given()
-                .auth().preemptive().basic(LOGIN, PASSWORD)
+        given().auth().preemptive().basic(LOGIN, PASSWORD)
                 .when().get(BASE_PATH)
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value())
