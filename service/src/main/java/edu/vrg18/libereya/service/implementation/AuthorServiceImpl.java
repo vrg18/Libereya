@@ -11,12 +11,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AuthorServiceImpl implements AuthorService {
 
@@ -36,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public AuthorDto getAuthorById(UUID id) {
         return authorMapper.map(HibernateUnproxy.initializeAndUnproxy(authorRepository.getOne(id)), AuthorDto.class);
     }
@@ -59,7 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public List<AuthorDto> findAllAuthors() {
         return authorRepository.findAll()
                 .stream()

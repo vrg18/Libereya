@@ -12,12 +12,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class BookServiceImpl implements BookService {
 
@@ -41,7 +43,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public BookDto getBookById(UUID id) {
         return bookMapper.map(HibernateUnproxy.initializeAndUnproxy(bookRepository.getOne(id)), BookDto.class);
     }
@@ -71,7 +73,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public List<BookDto> findAllBooks() {
         return bookRepository.findAll()
                 .stream()
@@ -80,7 +82,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public List<BookDto> findBooksByAuthor(UUID id) {
         return bookRepository.findBooksByAuthorId(id)
                 .stream()

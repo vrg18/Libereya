@@ -1,7 +1,13 @@
 package edu.vrg18.libereya.controller;
 
+import edu.vrg18.libereya.entity.AppRole;
+import edu.vrg18.libereya.entity.AppUser;
 import edu.vrg18.libereya.entity.Author;
+import edu.vrg18.libereya.entity.UserRole;
 import edu.vrg18.libereya.repository.AuthorRepository;
+import edu.vrg18.libereya.repository.RoleRepository;
+import edu.vrg18.libereya.repository.UserRepository;
+import edu.vrg18.libereya.repository.UserRoleRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.After;
@@ -12,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -24,11 +31,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class AuthorRestControllerIntegrationTest {
 
     private static final String BASE_PATH = "/rest/authors";
     private static final String LOGIN = "admin1";
     private static final String PASSWORD = "123";
+    private static final String ROLE = "ROLE_ADMIN";
     private static final String TEST_AUTHOR_1 = "Полиграф Полиграфович Шариков";
     private static final String TEST_AUTHOR_2 = "Акакий Акакиевич Башмачкин";
 
@@ -36,17 +45,27 @@ public class AuthorRestControllerIntegrationTest {
     private int port;
 
     private AuthorRepository authorRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private UserRoleRepository userRoleRepository;
     private List<UUID> idListForRemoteAfterTest = new ArrayList<>();
 
     @Autowired
-    private void setRepository(AuthorRepository authorRepository) {
+    private void setRepositore(AuthorRepository authorRepository,
+                               UserRepository userRepository,
+                               RoleRepository roleRepository,
+                               UserRoleRepository userRoleRepository) {
         this.authorRepository = authorRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Before
     public void setup() {
 
         RestAssured.port = port;
+        createTestUser();
     }
 
     @After
@@ -131,7 +150,8 @@ public class AuthorRestControllerIntegrationTest {
         String id1 = createTestAuthor(TEST_AUTHOR_1);
         String id2 = createTestAuthor(TEST_AUTHOR_2);
 
-        given().auth().preemptive().basic(LOGIN, PASSWORD)
+        given()
+                .auth().preemptive().basic(LOGIN, PASSWORD)
                 .when().get(BASE_PATH)
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value())
@@ -145,5 +165,14 @@ public class AuthorRestControllerIntegrationTest {
         UUID authorId = authorRepository.saveAndFlush(new Author(authorName)).getId();
         idListForRemoteAfterTest.add(authorId);
         return authorId.toString();
+    }
+
+    private void createTestUser() {
+
+        if (userRepository.findAppUserByUserName(LOGIN) == null) {
+            AppUser appUser = userRepository.saveAndFlush(new AppUser(LOGIN, PASSWORD, true));
+            AppRole appRole = roleRepository.saveAndFlush(new AppRole(ROLE));
+            userRoleRepository.saveAndFlush(new UserRole(appUser, appRole));
+        }
     }
 }
