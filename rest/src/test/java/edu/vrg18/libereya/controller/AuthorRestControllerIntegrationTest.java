@@ -35,7 +35,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class AuthorRestControllerIntegrationTest {
 
     private static final String BASE_PATH = "/rest/authors";
-    private static final String LOGIN = "admin1";
+    private static final String LOGIN = "test";
     private static final String PASSWORD = "123";
     private static final String ROLE = "ROLE_ADMIN";
     private static final String TEST_AUTHOR_1 = "Полиграф Полиграфович Шариков";

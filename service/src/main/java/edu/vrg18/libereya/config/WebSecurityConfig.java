@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity//(debug=true)
+//@EnableWebSecurity//(debug=true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)//, proxyTargetClass = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
